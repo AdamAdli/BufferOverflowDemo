@@ -15,12 +15,22 @@ Although dated and artificial, this is a small toy just to inspire interest in c
 ## Demo Overview
 For basic background knowledge, read Aleph One's [Smashing The Stack For Fun And Profit](https://inst.eecs.berkeley.edu/~cs161/fa08/papers/stack_smashing.pdf).
 
+### Makefile
+This project has the most basic Makefile `make [all|clean]`. I probably don't need to explain it.
+
+### Executables
+Building the code will create two executables:
+1. `demo_target`: the vulnerable dummy that we want to exploit.
+2. `demo_exploit`: a program that uses `exec` to launch `demo_target` in attempt to exploit it by passing arguments.
+
+### Hints
 In this example, `demo_target.c` contains the vulnerable target program. You can run this program with `gdb` in order to investigate the memory address of `buf`.
 
 Notice how there is an unsafe `strcpy` call copying `argv[1]` to `buf`. 
 
 In `demo_exploit.c`, you should construct the arguments passed into the program `demo_target` through `exec` in a way to exploit the `strcpy` by overwriting `foo`'s stack's return address and spawning a shell by executing the `shellcode`.
 
+### Running the Demo
 If successful, running `./demo_exploit` should spawn a shell inside of `./demo_target`:
 ```
 wolf:~/csc469/BufferOverflowDemo$ ./demo_exploit
