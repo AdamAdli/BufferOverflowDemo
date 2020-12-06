@@ -3,9 +3,7 @@ CC := gcc
 RM := rm -f
 
 # flags
-CFLAGS := -ggdb -Wno-format-security
-LDFLAGS :=
-LDLIBS :=
+CFLAGS := -ggdb -Wno-format-security -fno-stack-protector -no-pie -z execstack
 
 .PHONY: default all clean
 

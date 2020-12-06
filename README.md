@@ -5,6 +5,9 @@ Heavily inspired by ECE568, this is a toy example I put together to share a simp
 Different GCC versions and OSes will have some differentiation in their stack layout.
 In reality, successful buffer overflow attacks are not so trivial to do due to protection mechanisms like [Address Space Layout Randomization](https://en.wikipedia.org/wiki/Address_space_layout_randomization), [Stack Canaries](https://en.wikipedia.org/wiki/Buffer_overflow_protection#Canaries), and [Executable Space Protection](https://en.wikipedia.org/wiki/Executable_space_protection).
 
+### What about the CFLAGS in the Makefile?
+For the purpose of this demo, we disable the buffer overflow protection mechanisms using the following GCC flags: `-Wno-format-security -fno-stack-protector -no-pie -z execstack`.
+
 ## So what's the point of this repo?
 Just for fun. :)
 Although dated and artificial, this is a small toy just to inspire interest in computer security.
@@ -18,3 +21,13 @@ Notice how there is an unsafe `strcpy` call copying `argv[1]` to `buf`.
 
 In `demo_exploit.c`, you should construct the arguments passed into the program `demo_target` through `exec` in a way to exploit the `strcpy` by overwriting `foo`'s stack's return address and spawning a shell by executing the `shellcode`.
 
+If successful, running `./demo_exploit` should spawn a shell inside of `./demo_target`:
+```
+wolf:~/csc469/BufferOverflowDemo$ ./demo_exploit
+Demo 1 running.
+$ echo "I'm in a shell, inside of ./demo_target!"        
+I'm in a shell, inside of ./demo_target!
+$ exit
+```
+
+You can find my exploit in `demo_exploit_solution.c`.
