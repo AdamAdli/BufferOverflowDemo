@@ -8,11 +8,10 @@ int foo(char *arg, char *out) {
 }
 
 int demo_main(int argc, char *argv[]) {
-    int t = 2;
     char buf[124];
 
     printf("Demo 1 running.\n");
-    if (argc != t) {
+    if (argc != 2) {
         fprintf(stderr, "demo_target: argc != 2\n");
         exit(EXIT_FAILURE);
     }
